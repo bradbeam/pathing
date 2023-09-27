@@ -184,3 +184,11 @@ func (g *Grid) UnpackCoord(v uint32) GridCoord {
 	y := int(u32 >> 16)
 	return GridCoord{X: x, Y: y}
 }
+
+type CostFunc func(x, y int) uint8
+
+func (g *Grid) Cost(l GridLayer) func(x, y int) uint8 {
+	return func(x, y int) uint8 {
+		return g.GetCellCost(GridCoord{X: x, Y: y}, l)
+	}
+}

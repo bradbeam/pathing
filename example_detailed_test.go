@@ -80,7 +80,7 @@ func Example() {
 	finishPos := pathing.GridCoord{X: 3, Y: 1}
 
 	// Let's build a normal path first, for a non-flying unit.
-	p := bfs.BuildPath(g, startPos, finishPos, normalLayer)
+	p := bfs.BuildPath(g, startPos, finishPos, g.Cost(normalLayer))
 	fmt.Println(p.Steps.String(), "- normal layer path")
 
 	// You can iterate the path.
@@ -89,7 +89,7 @@ func Example() {
 	}
 
 	// A flying unit can go in a straight line.
-	p = bfs.BuildPath(g, startPos, finishPos, flyingLayer)
+	p = bfs.BuildPath(g, startPos, finishPos, g.Cost(flyingLayer))
 	fmt.Println(p.Steps.String(), "- flying layer path")
 
 	// A path building result has some extra information bits you might be interested in.

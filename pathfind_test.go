@@ -10,7 +10,7 @@ import (
 )
 
 type pathBuilder interface {
-	BuildPath(g *pathing.Grid, from, to pathing.GridCoord, l pathing.GridLayer) pathing.BuildPathResult
+	BuildPath(g *pathing.Grid, from, to pathing.GridCoord, costFn pathing.CostFunc) pathing.BuildPathResult
 }
 
 type testGrid struct {
@@ -34,7 +34,7 @@ func runPathfindTest(t *testing.T, test pathfindTestCase, constructor func(uint,
 			l = pathing.MakeGridLayer([4]uint8{1, 0, 2, 3})
 		}
 
-		result := impl.BuildPath(grid, parseResult.start, parseResult.dest, l)
+		result := impl.BuildPath(grid, parseResult.start, parseResult.dest, grid.Cost(l))
 		path := result.Steps
 
 		haveRows := make([][]byte, len(parseResult.haveRows))

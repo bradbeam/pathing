@@ -92,7 +92,7 @@ func NewGreedyBFS(config GreedyBFSConfig) *GreedyBFS {
 //
 // GreedyBFS treats 0 as "blocked" and any other value as "passable".
 // If you need a cost-based pathfinding, use AStar instead.
-func (bfs *GreedyBFS) BuildPath(g *Grid, from, to GridCoord, l GridLayer) BuildPathResult {
+func (bfs *GreedyBFS) BuildPath(g *Grid, from, to GridCoord, costFn CostFunc) BuildPathResult {
 	var result BuildPathResult
 	if from == to {
 		result.Finish = to
@@ -151,7 +151,7 @@ func (bfs *GreedyBFS) BuildPath(g *Grid, from, to GridCoord, l GridLayer) BuildP
 			if cx >= g.numCols || cy >= g.numRows {
 				continue
 			}
-			if g.getCellCost(cx, cy, l) == 0 {
+			if costFn(int(cx), int(cy)) == 0 {
 				continue
 			}
 			pathmapKey := pathmap.packCoord(next)

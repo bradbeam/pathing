@@ -24,7 +24,7 @@ func BenchmarkGreedyBFS(b *testing.B) {
 			})
 			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
-				bfs.BuildPath(parseResult.grid, parseResult.start, parseResult.dest, l)
+				bfs.BuildPath(parseResult.grid, parseResult.start, parseResult.dest, parseResult.grid.Cost(l))
 			}
 		})
 	}

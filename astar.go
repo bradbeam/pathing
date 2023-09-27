@@ -61,7 +61,7 @@ func NewAStar(config AStarConfig) *AStar {
 // It will use a provided Grid in combination with a GridLayer.
 // The Grid is expected to store the tile tags and the GridLayer is
 // used to interpret these tags.
-func (astar *AStar) BuildPath(g *Grid, from, to GridCoord, l GridLayer) BuildPathResult {
+func (astar *AStar) BuildPath(g *Grid, from, to GridCoord, costFn CostFunc) BuildPathResult {
 	var result BuildPathResult
 	if from == to {
 		result.Finish = to
@@ -117,7 +117,7 @@ func (astar *AStar) BuildPath(g *Grid, from, to GridCoord, l GridLayer) BuildPat
 			if cx >= g.numCols || cy >= g.numRows {
 				continue
 			}
-			nextCellCost := g.getCellCost(cx, cy, l)
+			nextCellCost := costFn(int(cx), int(cy))
 			if nextCellCost == 0 {
 				continue
 			}
